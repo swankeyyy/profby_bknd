@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
 
+from app.src.admin.config import create_admin
 
 app = FastAPI(
     title="prof.by",
@@ -12,6 +13,8 @@ app = FastAPI(
     },
 )
 
+# connect admin panel to app
+admin = create_admin(app)
 
 
 
