@@ -16,7 +16,5 @@ app = FastAPI(
 # connect admin panel to app
 admin = create_admin(app)
 
-
-
 if __name__ == "__main__":
     uvicorn.run("main:app", reload=True)
