@@ -1,8 +1,9 @@
 from app.src.models.db_config import db_config
-from .models import SocialLinkAdmin, ContactAdmin
+from .models import SocialLinkAdmin, ContactAdmin, ReviewAdmin
 from sqladmin import Admin
 
-list_views = [SocialLinkAdmin, ContactAdmin]
+list_views = [SocialLinkAdmin, ContactAdmin, ReviewAdmin]
+
 
 def create_admin(app):
     """Connect Admin Panel to database and to main app"""

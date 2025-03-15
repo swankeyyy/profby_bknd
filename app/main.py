@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 
 from app.src.admin.config import create_admin
@@ -11,6 +12,13 @@ app = FastAPI(
         "name": "Ivan Levchuk",
         "email": "swankyyy1@gmail.com",
     },
+)
+
+# connect static
+app.mount(
+    "/images/",
+    StaticFiles(directory="../images"),
+    name="images"
 )
 
 # connect admin panel to app
