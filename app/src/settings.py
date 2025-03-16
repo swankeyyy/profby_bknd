@@ -6,7 +6,7 @@ class Settings:
 
     API_PREFIX = "/api"
 
-    REVIEWS_STORAGE = "../images/reviews"
+    REVIEWS_STORAGE = "./images/reviews"
 
 
 settings = Settings()

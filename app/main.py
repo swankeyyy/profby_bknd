@@ -18,7 +18,7 @@ app = FastAPI(
 # connect static
 app.mount(
     "/images/",
-    StaticFiles(directory="../images"),
+    StaticFiles(directory="./images"),
     name="images"
 )
 

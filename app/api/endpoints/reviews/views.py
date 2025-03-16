@@ -22,6 +22,6 @@ async def get_reviews(session: AsyncSession = Depends(db_config.get_session)):
     if not reviews:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="No links found in database"
+            detail="No reviews found in database"
         )
     return reviews
