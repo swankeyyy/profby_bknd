@@ -1,29 +1,39 @@
+from typing import TypeVar, Generic, Type
+
 from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models import Contact
+from src.models import Contact, SocialLink
+
+ModelType = TypeVar("ModelType")
 
 
-class ContactsService:
-    """All CRUD operations for contacts."""
+class BaseService(Generic[ModelType]):
 
-    @staticmethod
-    async def get_all_contacts(session: AsyncSession) -> list[Contact]:
+    def __init__(self, model: Type[ModelType]):
+        self.model = model
+
+    async def get_all(self, session: AsyncSession) -> list[ModelType]:
         """
-                Retrieve all contacts from database
+                        Retrieve all items from database
 
-                Args:
-                    session: Async database session
+                        Args:
+                            session: Async database session
 
-                Returns:
-                    List of Contact objects (empty list if no contacts found)
+                        Returns:
+                            List of items (empty list if no items found)
 
-                Raises:
-                    DatabaseError: If any database error occurs
-                """
+                        Raises:
+                            Exception: If any database error occurs
+                        """
         try:
-            stmt = select(Contact)
-            contacts = await session.scalars(stmt)
-            return list(contacts)
-        except Exception as e:
-            raise RuntimeError(f"Database error: {str(e)}") from e
+            stmt = select(self.model)
+            items = await session.scalars(stmt)
+            return list(items)
+        except SQLAlchemyError as e:
+            raise Exception(f"Database error: {str(e)}") from e
+
+
+contact_service = BaseService(Contact)
+social_link_service = BaseService(SocialLink)
