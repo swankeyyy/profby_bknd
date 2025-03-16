@@ -1,4 +1,5 @@
-all = ("Base", "Contact", "SocialLink")
+all = ("Base", "Contact", "SocialLink", "Review")
 
 from .base import Base
-from .contacts import Contact, SocialLink
+from .contact import Contact, SocialLink
+from .review import Review
