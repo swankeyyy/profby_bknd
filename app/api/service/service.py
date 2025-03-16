@@ -28,7 +28,7 @@ class BaseService(Generic[ModelType]):
                             Exception: If any database error occurs
                         """
         try:
-            stmt = select(self.model)
+            stmt = select(self.model).where(self.model.is_published == True)
             items = await session.scalars(stmt)
             return list(items)
         except SQLAlchemyError as e:
