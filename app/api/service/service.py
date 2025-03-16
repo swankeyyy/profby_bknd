@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models import Contact, SocialLink
+from src.models import Contact, SocialLink, Review
 
 ModelType = TypeVar("ModelType")
 
@@ -37,3 +37,4 @@ class BaseService(Generic[ModelType]):
 
 contact_service = BaseService(Contact)
 social_link_service = BaseService(SocialLink)
+review_service = BaseService(Review)

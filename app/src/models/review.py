@@ -4,13 +4,10 @@ from sqlalchemy.orm import Mapped, mapped_column
 from fastapi_storages.integrations.sqlalchemy import FileType
 from fastapi_storages import FileSystemStorage
 
-from uuid import uuid4
-
 from src.settings import settings
-
 from .base import Base
 
-storage = FileSystemStorage(path=settings.CONTACTS_STORAGE)
+storage = FileSystemStorage(path=settings.REVIEWS_STORAGE)
 
 
 class Review(Base):

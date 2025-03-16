@@ -5,10 +5,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from starlette import status
 
-from .utils import errors_handler
+from api.utils.handlers import errors_handler
 from .schemas import ContactSchema, SocialLinkSchema
 from src.models.db_config import db_config
-from .service import contact_service, social_link_service
+from api.service.service import contact_service, social_link_service
 
 router = APIRouter()
 
