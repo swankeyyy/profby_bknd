@@ -8,8 +8,8 @@ class SocialLinkAdmin(ModelView, model=SocialLink):
     name = 'Социальная сеть'
     name_plural = 'Социальные сети'
     page_size = 100
-    column_list = [SocialLink.name]
-    column_details_list = [SocialLink.name, SocialLink.url]
+    column_list = [SocialLink.name, SocialLink.is_published]
+    column_details_list = [SocialLink.name, SocialLink.url, SocialLink.icon, SocialLink.is_published]
 
 
 class ContactAdmin(ModelView, model=Contact):
@@ -17,8 +17,8 @@ class ContactAdmin(ModelView, model=Contact):
     name = "Контакт"
     name_plural = "Контакты"
     page_size = 100
-    column_list = [Contact.name]
-    column_details_list = [Contact.name, Contact.contact]
+    column_list = [Contact.name, Contact.is_published]
+    column_details_list = [Contact.name, Contact.contact, Contact.is_published]
 
 
 class ReviewAdmin(ModelView, model=Review):
@@ -26,5 +26,5 @@ class ReviewAdmin(ModelView, model=Review):
     name = "Отзыв"
     name_plural = "Отзывы"
     page_size = 100
-    column_list = [Review.name, Review.profession]
-    column_details_list = [Review.name, Review.profession, Review.image]
+    column_list = [Review.name, Review.profession, Review.is_published]
+    column_details_list = [Review.name, Review.profession, Review.image, Review.is_published]
