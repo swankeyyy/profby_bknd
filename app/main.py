@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 
 from api import router as api_router
-from app.src.admin.config import create_admin
+from src.admin.config import create_admin
 
 app = FastAPI(
     title="prof.by",

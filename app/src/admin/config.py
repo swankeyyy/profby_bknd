@@ -1,4 +1,4 @@
-from app.src.models.db_config import db_config
+from src.models.db_config import db_config
 from .models import SocialLinkAdmin, ContactAdmin, ReviewAdmin
 from sqladmin import Admin
 

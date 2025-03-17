@@ -1,6 +1,6 @@
 from sqladmin import ModelView
 
-from app.src.models import SocialLink, Contact, Review
+from src.models import SocialLink, Contact, Review
 
 
 class SocialLinkAdmin(ModelView, model=SocialLink):
