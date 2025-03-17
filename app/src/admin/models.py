@@ -1,6 +1,6 @@
 from sqladmin import ModelView
 
-from src.models import SocialLink, Contact, Review, Profession
+from src.models import SocialLink, Contact, Review, Profession, Section, SectionImage
 
 
 class SocialLinkAdmin(ModelView, model=SocialLink):
@@ -37,3 +37,21 @@ class ProfessionAdmin(ModelView, model=Profession):
     page_size = 100
     column_list = [Profession.name, Profession.is_published]
     column_details_list = [Profession.name, Profession.is_published, Profession.image, Profession.description]
+
+
+class SectionAdmin(ModelView, model=Section):
+    """Admin panel for content sections"""
+    name = "Контент"
+    name_plural = "Контент"
+    page_size = 100
+    column_list = [Section.name, Section.title, Section.is_published]
+    column_details_list = [Section.name, Section.title, Section.is_published, Section.content, Section.images]
+
+
+class SectionImageAdmin(ModelView, model=SectionImage):
+    """Admin panel for content sections"""
+    name = "Изображение для секции контента"
+    name_plural = "Изображения"
+    page_size = 100
+    column_list = [SectionImage.image, SectionImage.is_published]
+    column_details_list = [SectionImage.image, SectionImage.is_published, SectionImage.section_id]
