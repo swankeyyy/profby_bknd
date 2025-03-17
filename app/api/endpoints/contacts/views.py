@@ -8,7 +8,7 @@ from starlette import status
 from api.utils.handlers import errors_handler
 from .schemas import ContactSchema, SocialLinkSchema
 from src.models.db_config import db_config
-from api.service.service import contact_service, social_link_service
+from api.service.crud import contact_service, social_link_service
 
 router = APIRouter()
 
