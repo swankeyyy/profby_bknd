@@ -28,5 +28,10 @@ admin = create_admin(app)
 # include routers
 app.include_router(api_router)
 
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, World! Updated!"}
+
 if __name__ == "__main__":
     uvicorn.run("main:app", reload=True)
