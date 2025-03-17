@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from typing import List
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from starlette import status
-
-from api.utils.handlers import errors_handler
+from api.utils.decorators import errors_handler
+from api.utils.responses import get_responses
+from api.utils.handlers import get_data
 from .schemas import ContactSchema, SocialLinkSchema
 from src.models.db_config import db_config
 from api.service.crud import contact_service, social_link_service
@@ -14,10 +14,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[ContactSchema], summary="List all contacts for footer",
-            responses={
-                status.HTTP_404_NOT_FOUND: {"description": "Contacts not found"},
-                status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal server error"}
-            })
+            responses=get_responses("Contacts"))
 @errors_handler
 async def get_contacts(session: AsyncSession = Depends(db_config.get_session)) -> List[ContactSchema]:
     """
@@ -29,20 +26,11 @@ async def get_contacts(session: AsyncSession = Depends(db_config.get_session)) -
         - 500 for server errors
         """
 
-    contacts = await contact_service.get_all(session)
-    if not contacts:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="No contacts found in database"
-        )
-    return contacts
+    return await get_data(instance=contact_service, session=session, text="Contacts")
 
 
 @router.get("/links/", response_model=List[SocialLinkSchema], summary="List all links of socials for footer",
-            responses={
-                status.HTTP_404_NOT_FOUND: {"description": "Links not found"},
-                status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Internal server error"}
-            })
+            responses=get_responses("Links"))
 @errors_handler
 async def get_links(session: AsyncSession = Depends(db_config.get_session)) -> List[SocialLinkSchema]:
     """
@@ -53,10 +41,4 @@ async def get_links(session: AsyncSession = Depends(db_config.get_session)) -> L
            - 404 if no contacts found
            - 500 for server errors
            """
-    links = await social_link_service.get_all(session)
-    if not links:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="No links found in database"
-        )
-    return links
+    return await get_data(instance=social_link_service, session=session, text="Links")

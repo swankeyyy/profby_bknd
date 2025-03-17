@@ -4,19 +4,21 @@ from typing import Optional
 
 
 class Base(BaseModel):
+    """Base schema with ID"""
+    id: UUID
     model_config = ConfigDict(
         from_attributes=True
     )
 
 
 class ContactSchema(Base):
-    id: UUID
+    """Schema for contacts with id, name(if it exists) and contact"""
     name: Optional[str] = None
     contact: str
 
 
 class SocialLinkSchema(Base):
-    id: UUID
+    """Schema for social links with id, name and favicon"""
     name: str
     url: str
     icon: str
