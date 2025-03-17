@@ -1,6 +1,6 @@
 from sqladmin import ModelView
 
-from src.models import SocialLink, Contact, Review
+from src.models import SocialLink, Contact, Review, Profession
 
 
 class SocialLinkAdmin(ModelView, model=SocialLink):
@@ -28,3 +28,12 @@ class ReviewAdmin(ModelView, model=Review):
     page_size = 100
     column_list = [Review.name, Review.profession, Review.is_published]
     column_details_list = [Review.name, Review.profession, Review.image, Review.is_published]
+
+
+class ProfessionAdmin(ModelView, model=Profession):
+    """Admin panel for Professions"""
+    name = "Профессия"
+    name_plural = "Профессии"
+    page_size = 100
+    column_list = [Profession.name, Profession.is_published]
+    column_details_list = [Profession.name, Profession.is_published, Profession.image, Profession.description]

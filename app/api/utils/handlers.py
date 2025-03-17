@@ -1,19 +1,12 @@
-import functools
-
 from fastapi import HTTPException
 from starlette import status
 
 
-def errors_handler(endpoint):
-    @functools.wraps(endpoint)
-    async def wrapper(*args, **kwargs):
-        try:
-            return await endpoint(*args, **kwargs)
-        except Exception as e:
-            # Log the error here
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=f"Failed to fetch data: {str(e)}"
-            )
-
-    return wrapper
+async def get_data(instance, session, text):
+    result = await instance.get_all(session)
+    if not result:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"No {text} found in database"
+        )
+    return result

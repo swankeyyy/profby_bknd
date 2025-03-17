@@ -1,8 +1,8 @@
 from src.models.db_config import db_config
-from .models import SocialLinkAdmin, ContactAdmin, ReviewAdmin
+from .models import SocialLinkAdmin, ContactAdmin, ReviewAdmin, ProfessionAdmin
 from sqladmin import Admin
 
-list_views = [SocialLinkAdmin, ContactAdmin, ReviewAdmin]
+list_views = [SocialLinkAdmin, ContactAdmin, ReviewAdmin, ProfessionAdmin]
 
 
 def create_admin(app):
