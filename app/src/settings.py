@@ -8,6 +8,7 @@ class Settings:
 
     REVIEWS_STORAGE = "./images/reviews"
     PROFESSIONS_STORAGE = "./images/professions"
+    SECTIONS_STORAGE = "./images/sections"
 
 
 settings = Settings()

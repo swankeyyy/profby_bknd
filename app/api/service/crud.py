@@ -3,8 +3,9 @@ from typing import TypeVar, Generic, Type
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload, selectinload
 
-from src.models import Contact, SocialLink, Review, Profession
+from src.models import Contact, SocialLink, Review, Profession, Section
 
 ModelType = TypeVar("ModelType")
 
@@ -39,3 +40,19 @@ contact_service = BaseService(Contact)
 social_link_service = BaseService(SocialLink)
 review_service = BaseService(Review)
 profession_service = BaseService(Profession)
+
+
+class SectionService(BaseService):
+    """Special Service for sections with load joined content"""
+
+    async def get_all(self, session: AsyncSession) -> list[ModelType]:
+        try:
+            stmt = select(Section).where(self.model.is_published == True).options(joinedload(Section.images))
+            sections = await session.execute(stmt)
+            sections = sections.scalars().unique().all()
+            return list(sections)
+        except SQLAlchemyError as e:
+            raise Exception(f"Database error: {str(e)}") from e
+
+
+content_service = SectionService(Section)
