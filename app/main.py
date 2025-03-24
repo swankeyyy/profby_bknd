@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 
@@ -31,7 +32,8 @@ app.include_router(api_router)
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello, World! Updated!"}
+    """main page redirect to docs"""
+    return RedirectResponse(url="/docs")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", reload=True)
