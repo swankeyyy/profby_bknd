@@ -1,0 +1,4 @@
+docker-compose build
+docker-compose up
+docker-compose exec web  /bin/sh 
+alembic upgrade heads
