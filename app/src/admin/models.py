@@ -2,6 +2,7 @@ from sqladmin import ModelView
 
 from src.models import SocialLink, Contact, Review, Profession, Section, SectionImage
 
+# Admin panels for models, it is used in the admin.py file, add models to list to add them to the admin panel
 
 class SocialLinkAdmin(ModelView, model=SocialLink):
     """Admin panel for Social Links"""

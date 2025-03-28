@@ -1,6 +1,6 @@
 from starlette import status
 
-
+# Return a dictionary of responses for API endpoints with text for messages
 def get_responses(text):
     """Responses for api endpoints with text for messages"""
     responses = {

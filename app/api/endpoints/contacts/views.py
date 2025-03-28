@@ -10,8 +10,10 @@ from .schemas import ContactSchema, SocialLinkSchema
 from src.models.db_config import db_config
 from api.service.crud import contact_service, social_link_service
 
+# init router
 router = APIRouter()
 
+# Endpoints for all contacts, links and socials. Only GET methods are allowed, no need for authentication
 
 @router.get("/", response_model=List[ContactSchema], summary="List all contacts for footer",
             responses=get_responses("Contacts"))

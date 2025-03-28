@@ -11,12 +11,14 @@ from uuid import UUID
 from .base import Base
 from src.settings import settings
 
+# Initialize the storage for the SectionImage model
 storage = FileSystemStorage(path=settings.SECTIONS_STORAGE)
 
 
 class SectionImage(Base):
     """Table with images for Section table(FK)"""
     __tablename__ = 'section_images'
+    # ImageType is a type for storing images in the database
     image: Mapped[str] = mapped_column(ImageType(storage))
     section_id: Mapped[UUID] = mapped_column(ForeignKey('sections.id'), nullable=True)
     section_image: Mapped["Section"] = relationship(back_populates="images")
@@ -31,6 +33,7 @@ class SectionImage(Base):
 class Section(Base):
     """Table for Sections on site with HTML content and background images"""
     __tablename__ = 'sections'
+    # SectionImage is a class that stores images for the Section table, images are optional
     name: Mapped[str] = mapped_column(String, nullable=False)
     title: Mapped[str] = mapped_column(String, nullable=False)
     content: Mapped[str]
