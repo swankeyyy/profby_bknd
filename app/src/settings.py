@@ -6,7 +6,7 @@ from typing import Optional
 class Settings(BaseSettings):
     
     DB_URL: str = Field(
-        default="postgresql+asyncpg://db:db@db:5432/db",
+        default="postgresql+asyncpg://profby:profby@db:5432/profby",
         description="URL для подключения к PostgreSQL."
     )
     DB_ECHO: bool = Field(
