@@ -26,6 +26,10 @@ Backend часть для проекта prof.by, который призван 
     docker-compose exec web /bin/sh
     alembic upgrade heads
     ```
+5.  Создать супер-пользователя:
+    ```
+     python create_superuser.py <имя> <пароль> 
+    ```
     
 ## Использование
 1. Сервер автоматически запустится после запуска доке-контейнеров.
