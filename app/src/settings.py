@@ -1,6 +1,6 @@
 class Settings:
     # Database settings
-    DB_URL: str = "postgresql+asyncpg://profby:profby@localhost:5432/profby"
+    DB_URL: str = "postgresql+asyncpg://profby:profby@db:5432/profby"
     DB_ECHO: bool = True
     
     # Server settings
