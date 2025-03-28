@@ -7,27 +7,29 @@ from sqlalchemy.orm import joinedload, selectinload
 
 from src.models import Contact, SocialLink, Review, Profession, Section
 
+# Generic type for model
 ModelType = TypeVar("ModelType")
 
 
 class BaseService(Generic[ModelType]):
+    """Base service for CRUD operations"""
 
     def __init__(self, model: Type[ModelType]):
         self.model = model
 
     async def get_all(self, session: AsyncSession) -> list[ModelType]:
         """
-                        Retrieve all items from database
+        Retrieve all items from database
 
-                        Args:
-                            session: Async database session
+        Args:
+            session: Async database session
 
-                        Returns:
-                            List of items (empty list if no items found)
+        Returns:
+            List of items (empty list if no items found)
 
-                        Raises:
-                            Exception: If any database error occurs
-                        """
+        Raises:
+            Exception: If any database error occurs
+        """
         try:
             stmt = select(self.model).where(self.model.is_published == True)
             items = await session.scalars(stmt)
@@ -36,6 +38,7 @@ class BaseService(Generic[ModelType]):
             raise Exception(f"Database error: {str(e)}") from e
 
 
+# Base services initialization
 contact_service = BaseService(Contact)
 social_link_service = BaseService(SocialLink)
 review_service = BaseService(Review)
@@ -47,12 +50,17 @@ class SectionService(BaseService):
 
     async def get_all(self, session: AsyncSession) -> list[ModelType]:
         try:
-            stmt = select(Section).where(self.model.is_published == True).options(joinedload(Section.images))
+            # Load images for sections by joinedload
+            stmt = (
+                select(Section)
+                .where(self.model.is_published == True)
+                .options(joinedload(Section.images))
+            )
             sections = await session.execute(stmt)
             sections = sections.scalars().unique().all()
             return list(sections)
         except SQLAlchemyError as e:
             raise Exception(f"Database error: {str(e)}") from e
 
-
+# Initialize especial service for sections
 content_service = SectionService(Section)

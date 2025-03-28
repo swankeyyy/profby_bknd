@@ -7,7 +7,6 @@ from src.models import Admin
 from src.admin.authentication import pwd_context
 
 
-
 # function to create a superuser by cmd
 async def create_superuser(username: str, password: str):
     """Create a superuser with the given username and password."""
@@ -19,6 +18,7 @@ async def create_superuser(username: str, password: str):
             print(f"User {username} already exists!")
             return
 
+        # hash the password by bcrypt
         hashed_password = pwd_context.hash(password)
         superuser_data = {
             "username": username,

@@ -2,7 +2,6 @@ from fastapi import HTTPException, Request, Depends
 from passlib.context import CryptContext
 from sqladmin.authentication import AuthenticationBackend
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
 import bcrypt
 
 from src.models.db_config import db_config

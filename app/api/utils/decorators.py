@@ -3,7 +3,7 @@ import functools
 from fastapi import HTTPException
 from starlette import status
 
-
+# Error handler decorator for endpoints that may raise database exceptions 
 def errors_handler(endpoint):
     @functools.wraps(endpoint)
     async def wrapper(*args, **kwargs):

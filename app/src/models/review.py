@@ -7,9 +7,10 @@ from fastapi_storages import FileSystemStorage
 from src.settings import settings
 from .base import Base
 
+# Initialize the storage for the Review model
 storage = FileSystemStorage(path=settings.REVIEWS_STORAGE)
 
-
+# Professions and images are optional
 class Review(Base):
     """People review model of choosen profession with photo, name, profession"""
     __tablename__ = 'reviews'
