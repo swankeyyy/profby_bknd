@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 from api import router as api_router
@@ -22,6 +23,15 @@ app.mount(
     "/images/",
     StaticFiles(directory="./images"),
     name="images"
+)
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Разрешить все домены (для разработки)
+    allow_credentials=True,
+    allow_methods=["*"],  # Разрешить все методы (GET, POST и т.д.)
+    allow_headers=["*"],  # Разрешить все заголовки
 )
 
 # connect admin panel to app
