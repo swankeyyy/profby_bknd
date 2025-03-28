@@ -18,7 +18,7 @@ class ReviewSchema(ReviewBase):
     name: str
     profession: Optional[str] = None
     review: str
-    image: str
+    image: Optional[str] = None
 
     @field_validator("image")
     def format_image(cls, v):

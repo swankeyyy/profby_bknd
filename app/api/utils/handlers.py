@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from starlette import status
 
-
+# Takes an instance and retirn Error if no data found
 async def get_data(instance, session, text):
     result = await instance.get_all(session)
     if not result:
