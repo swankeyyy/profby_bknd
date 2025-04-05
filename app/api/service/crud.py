@@ -5,7 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload, selectinload
 
-from src.models import Contact, SocialLink, Review, Profession, Section
+from src.models import Contact, SocialLink, Review, Profession, Section, Client
 
 # Generic type for model
 ModelType = TypeVar("ModelType")
@@ -45,6 +45,7 @@ review_service = BaseService(Review)
 profession_service = BaseService(Profession)
 
 
+# Special service for sections with load joined content
 class SectionService(BaseService):
     """Special Service for sections with load joined content"""
 
@@ -62,5 +63,30 @@ class SectionService(BaseService):
         except SQLAlchemyError as e:
             raise Exception(f"Database error: {str(e)}") from e
 
+
 # Initialize especial service for sections
 content_service = SectionService(Section)
+
+
+# Special service for clients
+class ClientService(Generic[ModelType]):
+    """Special Service for clients"""
+
+    def __init__(self, model):
+        # Initialize model
+        self.model = model
+
+    async def create_client(self, client: dict, session: AsyncSession) -> None:
+        # Try to create client
+        try:
+            name, phone = client.get("name", "Неизвестный"), client.get("phone")
+            stmt = self.model(name=name, phone=phone)
+            session.add(stmt)
+            await session.commit()
+            return True
+        except SQLAlchemyError as e:
+            raise Exception(f"Database error: {str(e)}")
+
+
+# Initialize especial service for clients
+client_service = ClientService(Client)

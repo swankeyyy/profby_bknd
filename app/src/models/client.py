@@ -9,7 +9,7 @@ class Client(Base):
 
     __tablename__ = "clients"
     name: Mapped[str] = mapped_column(String(50), nullable=True, default="Неизвестный")
-    phone: Mapped[str] = mapped_column(String(12), nullable=False)
+    phone: Mapped[str] = mapped_column(String(13), nullable=False)
 
     def __repr__(self):
         return f"{self.name} - {self.phone}"
@@ -25,7 +25,7 @@ class Client(Base):
             # Try to convert int or raise error
             try:
                 numeric_part: str = value[1:]
-                int(numeric_part)
+                numeric_part = int(numeric_part)
             except ValueError:
                 raise ValueError("Phone number must be numeric")
         return value
