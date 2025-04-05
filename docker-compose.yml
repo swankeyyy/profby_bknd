@@ -2,6 +2,7 @@ version: "3.9"
 services:
   db:
     image: postgres:14.8-alpine3.18
+    restart: unless-stopped
     volumes:
      - db-data:/var/lib/postgresql/data
     env_file:
@@ -16,6 +17,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    restart: unless-stopped
     env_file:
       - .env
     command:  sh -c "alembic upgrade head && gunicorn --worker-class uvicorn.workers.UvicornWorker
