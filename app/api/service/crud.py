@@ -87,24 +87,29 @@ class ClientService(Generic[ModelType]):
         """Create new client from dict and commit to database"""
         # Try to create client
         try:
-            name, phone = client.get("name", "Неизвестный"), client.get("phone")
-            stmt = self.model(name=name, phone=phone)
+            name, phone, message = (
+                client.get("name", "Неизвестный"),
+                client.get("phone"),
+                client.get("message"),
+            )
+            stmt = self.model(name=name, phone=phone, message=message)
             session.add(stmt)
             await session.commit()
 
             # Send notification
-            await self.create_tg_notification(name, phone)
+            await self.create_tg_notification(name, phone, message)
             return True
         except SQLAlchemyError as e:
             raise Exception(f"Database error: {str(e)}")
 
-    async def create_tg_notification(self, name: str, phone: str):
+    async def create_tg_notification(self, name: str, phone: str, message: str):
         try:
             # Init TG bot and TG chat
             message = (
                 "🆕 Новый клиент:\n"
                 f"👤 Имя: {name}\n"
                 f"📞 Телефон: {phone}\n"
+                f"📝 Примечание: {message}\n"
                 f"⏰ Время: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
             )
             bot = telebot.TeleBot(token=settings.BOT_TOKEN)

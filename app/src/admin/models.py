@@ -104,5 +104,5 @@ class ClientAdmin(ModelView, model=Client):
     name = "Клиент"
     name_plural = "Клиенты"
     page_size = 100
-    column_list = [Client.name, Client.phone]
-    column_details_list = [Client.name, Client.phone]
+    column_list = [Client.name, Client.phone, Client.message]
+    column_details_list = [Client.name, Client.phone, Client.message]

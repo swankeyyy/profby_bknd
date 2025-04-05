@@ -10,6 +10,7 @@ class Client(Base):
     __tablename__ = "clients"
     name: Mapped[str] = mapped_column(String(50), nullable=True, default="Неизвестный")
     phone: Mapped[str] = mapped_column(String(13), nullable=False)
+    message: Mapped[str] = mapped_column(String(500), nullable=True)
 
     def __repr__(self):
         return f"{self.name} - {self.phone}"

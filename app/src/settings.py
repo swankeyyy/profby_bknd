@@ -17,7 +17,7 @@ class Settings:
     
     # Telegram bot settings
     BOT_TOKEN: str = "7635278232:AAEwrdXLibTNiHmX-q_c-ESM9PGyNeoO-w0"
-    CHAT_ID: str = "984143453"
+    CHAT_ID: str = "962769404"
 
 
 

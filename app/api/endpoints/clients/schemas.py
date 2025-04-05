@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel, field_validator
 
 
@@ -6,6 +7,7 @@ class ClientSchema(BaseModel):
 
     name: str
     phone: str
+    message: Optional[str] = "Без примечания"
 
     @field_validator("phone")
     def validate_phone(cls, v):
