@@ -1,7 +1,7 @@
 from typing import List
 
 from fastapi_storages import FileSystemStorage
-from fastapi_storages.integrations.sqlalchemy import ImageType
+from fastapi_storages.integrations.sqlalchemy import FileType
 from sqlalchemy import ForeignKey, String
 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -19,7 +19,7 @@ class SectionImage(Base):
     """Table with images for Section table(FK)"""
     __tablename__ = 'section_images'
     # ImageType is a type for storing images in the database
-    image: Mapped[str] = mapped_column(ImageType(storage))
+    image: Mapped[str] = mapped_column(FileType(storage))
     section_id: Mapped[UUID] = mapped_column(ForeignKey('sections.id'), nullable=True)
     section_image: Mapped["Section"] = relationship(back_populates="images")
 
