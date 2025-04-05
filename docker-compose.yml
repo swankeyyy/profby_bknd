@@ -18,7 +18,14 @@ services:
       - db
     env_file:
       - .env
-    command:  sh -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    command:  sh -c "alembic upgrade head && gunicorn --worker-class uvicorn.workers.UvicornWorker
+               --workers $$(( 2 * $$(nproc) + 1 ))
+               --bind 0.0.0.0:$${PORT}
+               --timeout 120
+               --keep-alive 5
+               --access-logfile -
+               --error-logfile -
+               main:app"
   
  
 volumes:
