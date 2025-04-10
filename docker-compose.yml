@@ -2,24 +2,41 @@ version: "3.9"
 services:
   db:
     image: postgres:14.8-alpine3.18
+    restart: unless-stopped
     volumes:
      - db-data:/var/lib/postgresql/data
     env_file:
       - .db.env
-    ports:
-      - "5432:5432"
+    networks:
+      - app-network
   web:
     build: ./app
     volumes:
-      - ./app/:/app/
+      - static:/app/static
     ports:
       - "8000:8000"
     depends_on:
       - db
-    command:  sh -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - app-network
+    command:  sh -c "gunicorn --worker-class uvicorn.workers.UvicornWorker
+               --workers $$(( 2 * $$(nproc) + 1 ))
+               --bind 0.0.0.0:$${PORT}
+               --timeout 120
+               --keep-alive 5
+               --access-logfile -
+               --error-logfile -
+               main:app"
   
  
 volumes:
   db-data:
-  
+  static:
+
+networks:
+  app-network:
+    driver: bridge 
 
