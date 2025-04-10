@@ -23,18 +23,19 @@ Backend часть для проекта prof.by, который призван 
     ```
 4. Перейти в контейнер и выполнить миграции:
     ```
-    docker-compose exec web /bin/sh
+    docker exec -it prof_by-web-1 /bin/sh
     alembic upgrade heads
     ```
 5.  Создать супер-пользователя:
     ```
-     python create_superuser.py <имя> <пароль> 
+    python create_superuser.py <имя> <пароль> 
     ```
     
 ## Использование
 1. Сервер автоматически запустится после запуска доке-контейнеров.
-2. Документация доступна по адресу `http://localhost:8000/`.
-3. Админ панель доступна по адресу `http://localhost:8000/admin`
+2. Для взаимодействия с документацией в файле .env прописать DEBUG=1
+3. Документация доступна по адресу `http://localhost:8000/`.
+4. Админ панель доступна по адресу `http://localhost:8000/admin`
 
 ## License
 This project is licensed under the MIT License.
