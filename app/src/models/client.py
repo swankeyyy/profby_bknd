@@ -22,7 +22,7 @@ class Client(Base):
     def validate(self, key, value: str):
         """Validate phone number format"""
         # Check if the phone number is in the correct format
-        if len(value) == 13 and value.startswith("+375"):
+        if len(value) == 13 and value.startswith("+375") or value.startswith("7"):
             # Try to convert int or raise error
             try:
                 numeric_part: str = value[1:]

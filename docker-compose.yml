@@ -7,12 +7,12 @@ services:
      - db-data:/var/lib/postgresql/data
     env_file:
       - .db.env
-    ports:
-      - "5432:5432"
+    networks:
+      - app-network
   web:
     build: ./app
     volumes:
-      - ./app/:/app/
+      - static:/app/static
     ports:
       - "8000:8000"
     depends_on:
@@ -20,7 +20,9 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    command:  sh -c "alembic upgrade head && gunicorn --worker-class uvicorn.workers.UvicornWorker
+    networks:
+      - app-network
+    command:  sh -c "gunicorn --worker-class uvicorn.workers.UvicornWorker
                --workers $$(( 2 * $$(nproc) + 1 ))
                --bind 0.0.0.0:$${PORT}
                --timeout 120
@@ -32,5 +34,9 @@ services:
  
 volumes:
   db-data:
-  
+  static:
+
+networks:
+  app-network:
+    driver: bridge 
 
