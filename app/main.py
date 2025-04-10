@@ -6,12 +6,15 @@ import uvicorn
 
 from api import router as api_router
 from src.admin.config import create_admin
+from src.settings import settings
 
 # create FastAPI app
 app = FastAPI(
     title="prof.by",
     description="backend for prof.by",
     version="0.0.1",
+    ocs_url="/docs" if settings.DEBUG == "dev" else None,
+    redoc_url="/redoc" if settings.DEBUG == "dev" else None,
     contact={
         "name": "Ivan Levchuk",
         "email": "swankyyy1@gmail.com",
@@ -19,11 +22,7 @@ app = FastAPI(
 )
 
 # connect static
-app.mount(
-    "/images/",
-    StaticFiles(directory="./images"),
-    name="images"
-)
+app.mount("/images/", StaticFiles(directory="./images"), name="images")
 
 # Add CORS middleware
 app.add_middleware(
@@ -40,12 +39,8 @@ admin = create_admin(app)
 # include routers
 app.include_router(api_router)
 
-#redirect to docs from main page
-@app.get("/")
-def read_root():
-    """main page redirect to docs"""
-    return RedirectResponse(url="/docs")
 
 # run the app with uvicorn server
-if __name__ == "__main__":
-    uvicorn.run("main:app", reload=True)
+if settings.DEBUG:
+    if __name__ == "__main__":
+        uvicorn.run("main:app", reload=True)

@@ -2,6 +2,9 @@ import os
 
 
 class Settings:
+    # Prod/Debug mode
+    DEBUG: bool = bool(int(os.environ.get("DEBUG")))
+
     # Database settings
     DB_URL: str = os.environ.get("DB_URL")
     DB_ECHO: bool = bool(int(os.environ.get("DB_ECHO")))
